@@ -2,6 +2,7 @@ package am.online.shop.user.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,6 +22,8 @@ public record UserRequest(
         @Email
         @NotBlank(message = "Email is required")
         String email,
+        @NotNull(message = "Role is required")
+        Role role,
         boolean active
 ) {
 }
