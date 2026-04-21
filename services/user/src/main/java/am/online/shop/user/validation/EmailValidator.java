@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
-import static org.apache.commons.validator.routines.EmailValidator.*;
-
 /**
  * Author: Artyom Aroyan
  * Date: 21.04.26
@@ -17,6 +15,8 @@ import static org.apache.commons.validator.routines.EmailValidator.*;
 @Slf4j
 @Component
 public class EmailValidator implements GenericValidator<String> {
+    private static final EmailValidator EMAIL_VALIDATOR = new EmailValidator();
+
     private static final Pattern PATTERN = Pattern.compile("^.+@.+\\..+$");
 
     @Override
@@ -39,9 +39,13 @@ public class EmailValidator implements GenericValidator<String> {
             throw new ValidationException("Email can not contain consecutive dots");
         }
 
-        if (getInstance().isValid(email)) {
+        if (org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
             throw new ValidationException("Invalid email format");
         }
         return email;
+    }
+
+    public static EmailValidator getInstance() {
+        return EMAIL_VALIDATOR;
     }
 }

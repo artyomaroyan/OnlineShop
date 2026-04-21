@@ -7,6 +7,8 @@ import am.online.shop.user.model.UserResponse;
 import org.spring.basic.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+
 /**
  * Author: Artyom Aroyan
  * Date: 17.04.26
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse> {
+    private static final UserMapper USER_MAPPER = new UserMapper();
 
     @Override
     protected UserEntity mapToEntity(UserRequest request) {
@@ -37,5 +40,9 @@ public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse
                 entity.getRole(),
                 entity.isActive()
         );
+    }
+
+    public static UserMapper getInstance() {
+        return USER_MAPPER;
     }
 }
