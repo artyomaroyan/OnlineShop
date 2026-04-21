@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PasswordValidator implements GenericValidator<String> {
+    private static final PasswordValidator PASSWORD_VALIDATOR = new PasswordValidator();
+
     private final org.passay.PasswordValidator validator = new org.passay.PasswordValidator(
             new LengthRule(8, 32),
             new CharacterRule(EnglishCharacterData.UpperCase, 1),
@@ -28,5 +30,9 @@ public class PasswordValidator implements GenericValidator<String> {
             throw new ValidationException(String.join(",", validator.getMessages(result)));
         }
         return password;
+    }
+
+    public static PasswordValidator getInstance() {
+        return PASSWORD_VALIDATOR;
     }
 }

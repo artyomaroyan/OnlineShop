@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @Component
 public class UsernameValidator implements GenericValidator<String> {
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z][a-zA-Z0-9._]{4,14}$");
-
+    private static final UsernameValidator USERNAME_VALIDATOR = new UsernameValidator();
     @Override
     public String isValid(String username) {
         if (username == null || username.trim().isEmpty()) {
@@ -27,5 +27,9 @@ public class UsernameValidator implements GenericValidator<String> {
             throw new ValidationException("Username contains invalid characters. (Valid -> lowercase, uppercase, numbers, dot underscore, 5 - 15 length)");
         }
         return username;
+    }
+
+    public static UsernameValidator getInstance() {
+        return USERNAME_VALIDATOR;
     }
 }

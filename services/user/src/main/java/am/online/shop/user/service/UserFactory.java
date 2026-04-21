@@ -4,6 +4,7 @@ import am.online.shop.user.mapper.UserMapper;
 import am.online.shop.user.model.UserEntity;
 import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.model.UserResponse;
+import am.online.shop.user.security.PasswordHashService;
 import am.online.shop.user.validation.EmailValidator;
 import am.online.shop.user.validation.PasswordValidator;
 import am.online.shop.user.validation.UsernameValidator;
@@ -21,26 +22,23 @@ import static am.online.shop.user.model.Role.USER;
  */
 @Component
 public record UserFactory() {
-    private static UserMapper mapper;
-    private static UsernameValidator usernameValidator;
-    private static PasswordValidator passwordValidator;
-    private static EmailValidator emailValidator;
 
     static Mono<UserResponse> createUser(UserRequest request) {
         return create(request);
     }
 
     private static Mono<UserResponse> create(UserRequest request) {
+        var validPass = PasswordValidator.getInstance().isValid(request.password());
         final UserEntity entity = UserEntity.builder()
                 .id(UUID.randomUUID())
-                .username(usernameValidator.isValid(request.username()))
-                .password(passwordValidator.isValid(request.password()))
-                .email(emailValidator.isValid(request.email()))
+                .username(UsernameValidator.getInstance().isValid(request.username()))
+                .password(PasswordHashService.getInstance().encode(validPass))
+                .email(EmailValidator.getInstance().isValid(request.email()))
                 .role(USER)
                 .active(true)
                 .build();
 
-        return mapper.fromEntityToResponse(entity);
+        return UserMapper.getInstance().fromEntityToResponse(entity);
     }
 
     // todo: implement logic for user active status, something like -> if user activate OTP or verify email then account is active...
