@@ -32,10 +32,10 @@ public record UserFactory() {
         final UserEntity entity = UserEntity.builder()
                 .id(UUID.randomUUID())
                 .username(UsernameValidator.getInstance().isValid(request.username()))
-                .password(PasswordHashService.getInstance().encode(validPass))
+                .password(PasswordHashService.getInstance().encode(validPass).toCharArray())
                 .email(EmailValidator.getInstance().isValid(request.email()))
                 .role(USER)
-                .active(true)
+                .active(false)
                 .build();
 
         return UserMapper.getInstance().fromEntityToResponse(entity);

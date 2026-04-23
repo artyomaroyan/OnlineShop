@@ -7,12 +7,5 @@ import java.util.UUID;
  * Date: 17.04.26
  * Time: 16:02:04
  */
-public record UserResponse(
-        UUID id,
-        String username,
-        String password,
-        String email,
-        Role role,
-        boolean active
-) {
+public record UserResponse(UUID id, String username, String email, Role role, boolean active) {
 }
