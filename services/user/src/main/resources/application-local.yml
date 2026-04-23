@@ -1,0 +1,7 @@
+DB_URL: localhost
+DB_PORT: 5432
+DB_NAME: online_shop_users
+DB_USERNAME: online_shop_user_owner
+DB_PASSWORD: online_shop_user_owner
+DB_SCHEMAS: users
+DB_DEFAULT_SCHEMA: users
