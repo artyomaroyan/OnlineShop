@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -13,16 +14,17 @@ import java.util.UUID;
  * Date: 17.04.26
  * Time: 15:52:09
  */
+@Table
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "", schema = "")
 public class UserEntity {
     private UUID id;
     private String username;
-    private String password;
+    private char[] password;
     private String email;
     private Role role;
+    private LocalDateTime createdAt;
     private boolean active;
 }
