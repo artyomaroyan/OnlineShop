@@ -39,7 +39,7 @@ public class EmailValidator implements GenericValidator<String> {
             throw new ValidationException("Email can not contain consecutive dots");
         }
 
-        if (org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
+        if (!org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
             throw new ValidationException("Invalid email format");
         }
         return email;
