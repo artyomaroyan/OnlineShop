@@ -2,7 +2,6 @@ package am.online.shop.user.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.spring.basic.exception.ValidationException;
-import org.spring.basic.validation.GenericValidator;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -14,13 +13,11 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Component
-public class EmailValidator implements GenericValidator<String> {
-    private static final EmailValidator EMAIL_VALIDATOR = new EmailValidator();
-
+public class EmailValidator {
     private static final Pattern PATTERN = Pattern.compile("^.+@.+\\..+$");
+    private static final org.apache.commons.validator.routines.EmailValidator apacheEmailValidator = org.apache.commons.validator.routines.EmailValidator.getInstance();
 
-    @Override
-    public String isValid(String email) {
+    public boolean isValid(String email) {
         if (email == null || email.isBlank()) {
             throw new ValidationException("Email can not be null or empty");
         }
@@ -39,13 +36,9 @@ public class EmailValidator implements GenericValidator<String> {
             throw new ValidationException("Email can not contain consecutive dots");
         }
 
-        if (!org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
+        if (!apacheEmailValidator.isValid(email)) {
             throw new ValidationException("Invalid email format");
         }
-        return email;
-    }
-
-    public static EmailValidator getInstance() {
-        return EMAIL_VALIDATOR;
+        return true;
     }
 }

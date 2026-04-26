@@ -14,15 +14,15 @@ import java.util.UUID;
  * Date: 17.04.26
  * Time: 15:52:09
  */
-@Table
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users", schema = "users")
 public class UserEntity {
     private UUID id;
     private String username;
-    private char[] password;
+    private String password;
     private String email;
     private Role role;
     private LocalDateTime createdAt;

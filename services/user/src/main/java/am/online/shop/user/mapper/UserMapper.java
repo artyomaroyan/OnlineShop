@@ -14,14 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse> {
-    private static final UserMapper USER_MAPPER = new UserMapper();
 
     @Override
     protected UserEntity mapToEntity(UserRequest request) {
         return UserEntity.builder()
                 .id(null)
                 .username(request.username())
-                .password(request.password().toCharArray())
+                .password(request.password())
                 .email(request.email())
                 .role(Role.USER)
                 .active(false)
@@ -37,9 +36,5 @@ public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse
                 entity.getRole(),
                 entity.isActive()
         );
-    }
-
-    public static UserMapper getInstance() {
-        return USER_MAPPER;
     }
 }
