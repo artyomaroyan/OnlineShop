@@ -2,7 +2,6 @@ package am.online.shop.user.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.spring.basic.exception.ValidationException;
-import org.spring.basic.validation.GenericValidator;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -14,11 +13,10 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Component
-public class UsernameValidator implements GenericValidator<String> {
+public class UsernameValidator {
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z][a-zA-Z0-9._]{4,14}$");
-    private static final UsernameValidator USERNAME_VALIDATOR = new UsernameValidator();
-    @Override
-    public String isValid(String username) {
+
+    public boolean isValid(String username) {
         if (username == null || username.trim().isEmpty()) {
             throw new ValidationException("Username can not be null or empty!");
         }
@@ -26,10 +24,6 @@ public class UsernameValidator implements GenericValidator<String> {
         if (!PATTERN.matcher(username).matches()) {
             throw new ValidationException("Username contains invalid characters. (Valid -> lowercase, uppercase, numbers, dot underscore, 5 - 15 length)");
         }
-        return username;
-    }
-
-    public static UsernameValidator getInstance() {
-        return USERNAME_VALIDATOR;
+        return true;
     }
 }

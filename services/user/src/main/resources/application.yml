@@ -22,6 +22,14 @@ spring:
     callback-locations: classpath:db/migration
     driver-class-name: org.postgresql.Driver
 
+  security:
+    argon2-hash:
+      memory: ${ARGON2_HASH_MEMORY}
+      iterations: ${ARGON2_HASH_ITERATIONS}
+      parallelism: ${ARGON2_HASH_PARALELISM}
+      hash-length: ${ARGON2_HASH_HASH-LENGTH}
+      salt-length: ${ARGON2_HASH_SALT-LENGTH}
+
 server:
   port: 8081
 
@@ -38,13 +46,19 @@ logging:
   level:
     org:
       springframework:
+        r2dbc:
+          info
+    io:
+      r2dbc:
+        postgresql:
+          QUERY: info
         security:
-          access: debug
-          authentication: debug
-          authorization: debug
-        _: debug
+          access: INFO
+          authentication: INFO
+          authorization: INFO
+        _: INFO
     am:
       online:
         shop:
           user:
-            security: debug
+            security: INFO
