@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                                 "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources",
                                 "/swagger-resources/**", "/configuration/ui", "/configuration/security")
                             .permitAll()
-                        .pathMatchers("/api/v1/users/onboarding")
+                        .pathMatchers("/api/v1/users/onboarding", "/api/v1/users/get/by/**")
                             .permitAll()
                         .anyExchange()
                             .authenticated()
