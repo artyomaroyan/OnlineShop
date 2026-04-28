@@ -11,6 +11,7 @@ spring:
     password: ${DB_PASSWORD}
     properties:
       show-sql: true
+
   flyway:
     enabled: true
     url: jdbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
@@ -21,6 +22,21 @@ spring:
     baseline-on-migrate: true
     callback-locations: classpath:db/migration
     driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 6000ms
+      repositories:
+        enabled: false
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+    r2dbc:
+      repositories:
+        enabled: true
 
   security:
     argon2-hash:
@@ -53,12 +69,12 @@ logging:
         postgresql:
           QUERY: info
         security:
-          access: INFO
+          access: info
           authentication: INFO
           authorization: INFO
-        _: INFO
+        _: info
     am:
       online:
         shop:
           user:
-            security: INFO
+            security: info
