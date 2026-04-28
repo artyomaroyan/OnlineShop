@@ -7,11 +7,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
 
 /**
  * Author: Artyom Aroyan
@@ -25,9 +24,15 @@ import reactor.core.publisher.Mono;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/onboarding")
+    @PostMapping("/register")
     Mono<ResponseEntity<UserResponse>> createUser(@Valid @RequestBody UserRequest request) {
         return userService.create(request)
+                .map(ResponseEntity::ok);
+    }
+
+    @GetMapping("/get/by/{userId}")
+    Mono<ResponseEntity<UserResponse>> getUserById(@PathVariable UUID userId) {
+        return userService.findUserById(userId)
                 .map(ResponseEntity::ok);
     }
 }
