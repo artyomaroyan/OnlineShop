@@ -1,0 +1,14 @@
+    @Override
+    public Mono<UserResponse> findUserById(UUID userId) {
+        var cacheKey = buildCacheKey(userId);
+        return redisTemplate.opsForValue().get(cacheKey)
+                .switchIfEmpty(userRepository.findById(userId)
+                        .switchIfEmpty(Mono.error(new UserNotFoundException("User with id " + userId + " not found")))
+                        .flatMap(userMapper::fromEntityToResponse)
+                        .flatMap(user -> redisTemplate
+                                .opsForValue()
+                                .set(cacheKey, user, USER_CACHE_TTL)
+                                .thenReturn(user)));
+    }
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
