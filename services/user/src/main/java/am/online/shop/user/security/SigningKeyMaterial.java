@@ -9,7 +9,7 @@ import java.time.Instant;
  * Date: 01.05.26
  * Time: 01:20:46
  */
-record SigningKeyMaterial(
+public record SigningKeyMaterial(
         String keyId,
         PrivateKey privateKey,
         PublicKey publicKey,
