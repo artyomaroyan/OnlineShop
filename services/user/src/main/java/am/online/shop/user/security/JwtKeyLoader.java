@@ -1,17 +1,14 @@
 package am.online.shop.user.security;
 
 import am.online.shop.user.exception.RSAKeyException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
@@ -21,9 +18,7 @@ import java.util.Base64;
  * Date: 01.05.26
  * Time: 00:17:27
  */
-@Slf4j
 @Component
-//@EnableConfigurationProperties(JwtTokenProperties.class)
 final class JwtKeyLoader {
 
     PrivateKey loadPrivateKey(final String privateKyePath, final String algorithm) {
