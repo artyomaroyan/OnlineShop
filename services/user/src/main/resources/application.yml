@@ -22,6 +22,7 @@ spring:
     baseline-on-migrate: true
     callback-locations: classpath:db/migration
     driver-class-name: org.postgresql.Driver
+
   data:
     redis:
       host: localhost
@@ -45,6 +46,12 @@ spring:
       parallelism: ${ARGON2_HASH_PARALELISM}
       hash-length: ${ARGON2_HASH_HASH-LENGTH}
       salt-length: ${ARGON2_HASH_SALT-LENGTH}
+    jwt-token:
+      issuer: ${JWT_ISSUER}
+      expiration: ${JWT_EXPIRATION}
+      algorithm: ${JWT_ALGORITHM}
+      privateKeyPath: ${JWT_PRIVATE-KEY-PATH}
+      publicKeyPath: ${JWT_PUBLIC-KEY-PATH}
 
 server:
   port: 8081
