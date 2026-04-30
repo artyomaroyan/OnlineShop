@@ -11,3 +11,9 @@ ARGON2_HASH_ITERATIONS: 3
 ARGON2_HASH_PARALELISM: 3
 ARGON2_HASH_HASH-LENGTH: 128
 ARGON2_HASH_SALT-LENGTH: 128
+
+JWT_ISSUER: http://localhost:8081
+JWT_EXPIRATION: 3600000
+JWT_ALGORITHM: RSA
+JWT_PRIVATE-KEY-PATH: /Users/artyom_aroyan/Software/Java/.keys/private_key.pem
+JWT_PUBLIC-KEY-PATH: /Users/artyom_aroyan/Software/Java/.keys/public_key.pem
