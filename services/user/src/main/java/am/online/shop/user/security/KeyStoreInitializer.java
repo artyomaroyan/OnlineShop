@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Author: Artyom Aroyan
@@ -28,7 +28,7 @@ public class KeyStoreInitializer {
     public void init() {
         final PrivateKey privateKey = keyLoader.loadPrivateKey(properties.privateKeyPath(), properties.algorithm());
         final PublicKey publicKey = keyLoader.loadPublicKey(properties.publicKeyPath(), properties.algorithm());
-        final String keyId = UUID.randomUUID().toString(); // this is temporary, this should be changed to Timestamp-based or Timestamp-based KeyId.
+        final String keyId = KeyIdGenerator.fromRsaPublicKey((RSAPublicKey) publicKey);
 
         SigningKeyMaterial keyMaterial = new SigningKeyMaterial(
                 keyId,

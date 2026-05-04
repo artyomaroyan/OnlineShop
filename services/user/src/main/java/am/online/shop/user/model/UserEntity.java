@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -27,7 +28,7 @@ public class UserEntity implements Serializable {
     private String username;
     private String password;
     private String email;
-    private Role role;
+    private Set<Role> roles;
     private LocalDateTime createdAt;
     private boolean active;
 }
