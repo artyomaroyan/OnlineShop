@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
-public class JwtTokenServiceImpl implements JwtTokenService {
+final class JwtTokenServiceImpl implements JwtTokenService {
     private final JwtTokenProperties properties;
     private final KeyStoreService keyStoreService;
 

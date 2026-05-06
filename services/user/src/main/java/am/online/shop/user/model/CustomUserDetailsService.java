@@ -1,8 +1,10 @@
 package am.online.shop.user.model;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -16,8 +18,13 @@ import reactor.core.publisher.Mono;
 public class CustomUserDetailsService implements ReactiveUserDetailsService {
     private final UserRepository userRepository;
 
+    @NonNull
     @Override
-    public Mono<UserDetails> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Mono<UserDetails> findByUsername(@NonNull String username) {
+        return userRepository.findByUsername(username)
+                .map(UserIdentity::from)
+                .cast(UserDetails.class)
+                .switchIfEmpty(Mono.error(() -> new UsernameNotFoundException(
+                        "No Account found with " + username + " username")));
     }
 }

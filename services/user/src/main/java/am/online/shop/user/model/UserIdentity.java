@@ -27,9 +27,9 @@ public final class UserIdentity implements UserDetails {
     private final boolean credentialsNonExpired;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    private UserIdentity(UUID id, String username, String password,
-                         boolean enabled, boolean accountNonExpired, boolean accountNonLocked,
-                         boolean credentialsNonExpired, Collection<? extends GrantedAuthority> authorities) {
+    UserIdentity(UUID id, String username, String password,
+                 boolean enabled, boolean accountNonExpired, boolean accountNonLocked,
+                 boolean credentialsNonExpired, Collection<? extends GrantedAuthority> authorities) {
         this.id = Objects.requireNonNull(id);
         this.username = Objects.requireNonNull(username);
         this.password = Objects.requireNonNull(password);

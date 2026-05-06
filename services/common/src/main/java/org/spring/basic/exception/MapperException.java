@@ -6,6 +6,10 @@ package org.spring.basic.exception;
  * Time: 17:14:37
  */
 public class MapperException extends RuntimeException {
+    public MapperException(String message) {
+        super(message);
+    }
+
     public MapperException(String message, MapperException ex) {
         super(message, ex);
     }

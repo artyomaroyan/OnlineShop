@@ -18,7 +18,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
 @EnableReactiveMethodSecurity
-public class SecurityConfiguration {
+class SecurityConfiguration {
 
     @Bean
     protected SecurityWebFilterChain filterChain(ServerHttpSecurity httpSecurity) {
@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                                 "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources",
                                 "/swagger-resources/**", "/configuration/ui", "/configuration/security")
                             .permitAll()
-                        .pathMatchers("/api/v1/users/onboarding", "/api/v1/users/get/by/**")
+                        .pathMatchers("/api/v1/users/register", "/api/v1/users/get/by/**")
                             .permitAll()
                         .anyExchange()
                             .authenticated()

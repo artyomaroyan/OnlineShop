@@ -1,7 +1,6 @@
 package am.online.shop.user.model;
 
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -16,5 +15,5 @@ import java.util.UUID;
 public interface UserRepository extends R2dbcRepository<UserEntity, UUID> {
     Mono<Boolean> existsByUsername(String username);
     Mono<Boolean> existsByEmail(String email);
-    Mono<UserDetails> findByUsername(String username);
+    Mono<UserEntity> findByUsername(String username);
 }
