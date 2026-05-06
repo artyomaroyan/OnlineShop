@@ -17,11 +17,11 @@ public abstract class BaseMapper<E, RQ, RS> implements GenericMapper<E, RQ, RS> 
     public Mono<E> fromRequestToEntity(RQ request) {
         if (request == null) {
             log.warning(String.format("Attempted to map null request to entity (%s)", getClass().getSimpleName()));
-            return Mono.empty();
+            return Mono.error(new MapperException("Can not null request to entity"));
         }
         try {
             E entity = mapToEntity(request);
-            return entity != null ? Mono.just(entity) : Mono.empty();
+            return entity != null ? Mono.just(entity) : Mono.error(new MapperException("fromRequestToEntity returned null"));
         } catch (MapperException ex) {
             log.severe(String.format("Error mapping request to entity (%s), %s", getClass().getSimpleName(), ex));
             return Mono.error(new MapperException("Failed to map Request to Entity", ex));
@@ -32,11 +32,11 @@ public abstract class BaseMapper<E, RQ, RS> implements GenericMapper<E, RQ, RS> 
     public Mono<RS> fromEntityToResponse(E entity) {
         if (entity == null) {
             log.warning(String.format("Attempted to map null entity to response (%s)", getClass().getSimpleName()));
-            return Mono.empty();
+            return Mono.error(new MapperException("Can not null entity to response"));
         }
         try {
             RS response = mapToResponse(entity);
-            return response != null ? Mono.just(response) : Mono.empty();
+            return response != null ? Mono.just(response) : Mono.error(new MapperException("mapToResponse returned null"));
         } catch (MapperException ex) {
             log.severe(String.format("Error mapping entity to response (%s), %s", getClass().getSimpleName(), ex));
             return Mono.error(new MapperException("Failed to map Entity to Response", ex));
