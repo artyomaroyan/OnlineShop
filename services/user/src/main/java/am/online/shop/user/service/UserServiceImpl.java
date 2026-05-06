@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService {
                 .flatMap(this::validateUniqueness)
                 .flatMap(userFactory::createUser)
                 .flatMap(userRepository::save)
+                .switchIfEmpty(Mono.error(
+                        new RuntimeException("Save returned empty — check DB/transaction config")
+                ))
                 .flatMap(userMapper::fromEntityToResponse)
                 .onErrorResume(DuplicateKeyException.class, _ ->
                     Mono.error(new UserAlreadyExistsException("Username or email already exists")))
@@ -56,6 +59,7 @@ public class UserServiceImpl implements UserService {
                     return userRepository.findById(userId)
                             .switchIfEmpty(Mono.error(new UserNotFoundException("User with Id " + userId + " not found in DB")))
                             .flatMap(userMapper::fromEntityToResponse)
+                            .switchIfEmpty(Mono.error(new RuntimeException("conversation error here !")))
                             .flatMap(user -> redisTemplate.opsForValue()
                                     .set(cacheKey, user, USER_CACHE_TTL)
                                     .thenReturn(user));
