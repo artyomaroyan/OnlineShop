@@ -1,11 +1,14 @@
 package am.online.shop.user.mapper;
 
-import am.online.shop.user.model.Role;
 import am.online.shop.user.model.UserEntity;
 import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.model.UserResponse;
 import org.spring.basic.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
+
+import static am.online.shop.user.model.Role.USER;
 
 /**
  * Author: Artyom Aroyan
@@ -22,7 +25,7 @@ public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse
                 .username(request.username())
                 .password(request.password())
                 .email(request.email())
-                .role(Role.USER)
+                .roles(Set.of(USER))
                 .active(false)
                 .build();
     }
@@ -33,7 +36,7 @@ public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse
                 entity.getId(),
                 entity.getUsername(),
                 entity.getEmail(),
-                entity.getRole(),
+                entity.getRoles(),
                 entity.isActive()
         );
     }

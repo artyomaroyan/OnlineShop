@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Time: 01:23:15
  */
 @Component
-public class InMemoryKeyStoreService implements KeyStoreService {
+final class InMemoryKeyStoreService implements KeyStoreService {
     private final Map<String, SigningKeyMaterial> keys = new ConcurrentHashMap<>();
     private volatile String activeKeyId;
 

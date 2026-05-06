@@ -1,6 +1,5 @@
 package am.online.shop.user.service;
 
-import am.online.shop.user.model.Role;
 import am.online.shop.user.model.UserEntity;
 import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.security.PasswordHashService;
@@ -11,7 +10,10 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
+
+import static am.online.shop.user.model.Role.USER;
 
 /**
  * Author: Artyom Aroyan
@@ -35,11 +37,10 @@ public record UserFactory(
                         .username(request.username())
                         .password(tuple.getT3())
                         .email(request.email())
-                        .role(Role.USER)
+                        .roles(Set.of(USER))
                         .createdAt(LocalDateTime.now())
                         .active(false)
-                        .build())
-                ;
+                        .build());
     }
 
     private Mono<Boolean> validateUsername(String username) {
