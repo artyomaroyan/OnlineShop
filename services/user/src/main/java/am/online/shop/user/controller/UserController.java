@@ -1,34 +1,27 @@
 package am.online.shop.user.controller;
 
-import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.model.UserResponse;
 import am.online.shop.user.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 /**
  * Author: Artyom Aroyan
- * Date: 21.04.26
- * Time: 23:51:18
+ * Date: 08.05.26
+ * Time: 20:01:47
  */
-@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
-
-    @PostMapping("/register")
-    Mono<ResponseEntity<UserResponse>> createUser(@Valid @RequestBody UserRequest request) {
-        return userService.create(request)
-                .map(ResponseEntity::ok);
-    }
 
     @GetMapping("/get/by/{userId}")
     Mono<ResponseEntity<UserResponse>> getUserById(@PathVariable UUID userId) {
