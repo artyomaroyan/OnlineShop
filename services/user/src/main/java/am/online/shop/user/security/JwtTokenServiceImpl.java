@@ -37,6 +37,7 @@ final class JwtTokenServiceImpl implements JwtTokenService {
                 .expiration(exp)
                 .claim("uid", identity.userId())
                 .claim("auth", identity.getAuthorities())
+                .signWith(keyMaterial.privateKey(), Jwts.SIG.RS256)
                 .compact();
     }
 }
