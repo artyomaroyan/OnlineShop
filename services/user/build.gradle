@@ -63,11 +63,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    //swagger
+    // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.3'
     implementation 'org.apache.commons:commons-lang3:3.20.0'
 
-    // DNS resolver
+    // MacOS DNS resolver
     implementation 'io.netty:netty-resolver-dns-native-macos:4.2.12.Final:osx-aarch_64'
 
     // test
