@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-
 /**
  * Author: Artyom Aroyan
  * Date: 21.04.26
@@ -29,13 +26,11 @@ public record PasswordHashService(
         @Value("${spring.security.argon2-hash.salt-length}")
         int saltLength
 ) implements PasswordEncoder {
-    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     @Override
     public String encode(CharSequence rawPassword) {
         final Hash hash = Password
                 .hash(rawPassword)
-                .addPepper(generateRandomPaper())
                 .addRandomSalt(saltLength)
                 .with(Argon2Function.getInstance(memory, iterations, parallelism, hashLength, Argon2.ID));
         return hash.getResult();
@@ -43,12 +38,7 @@ public record PasswordHashService(
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return Password.check(rawPassword, encodedPassword).withArgon2();
-    }
-
-    private String generateRandomPaper() {
-        byte[] paper = new byte[32];
-        SECURE_RANDOM.nextBytes(paper);
-        return Base64.getEncoder().encodeToString(paper);
+        return Password.check(rawPassword, encodedPassword)
+                .with(Argon2Function.getInstance(memory, iterations, parallelism, hashLength, Argon2.ID));
     }
 }
