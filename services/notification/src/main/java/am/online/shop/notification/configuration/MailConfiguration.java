@@ -5,7 +5,5 @@ package am.online.shop.notification.configuration;
  * Date: 12.05.26
  * Time: 02:24:55
  */
-public record MailConfiguration(
-
-) {
+public record MailConfiguration() {
 }
