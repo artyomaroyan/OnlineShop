@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 public record AuthRequest(
-        @Schema(example = "user.1")
+        @Schema(example = "user1")
         @NotBlank(message = "username is required")
         @Size(min = 5, max = 16, message = "Username must be 5 - 16 characters length")
         String username,
