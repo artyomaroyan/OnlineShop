@@ -28,6 +28,11 @@ public class AuthServiceImpl implements AuthService {
     public Mono<String> login(AuthRequest request) {
         return userDetailsService.findByUsername(request.username())
                 .cast(UserIdentity.class)
+                .doOnNext(u -> {
+                    log.debug("Found user: {}", u.getUsername());
+                    log.debug("Stored password hash: {}", u.getPassword());
+                    log.debug("Password matches: {}", passwordHashService.matches(request.password(), u.getPassword()));
+                })
                 .filter(u -> passwordHashService.matches(request.password(), u.getPassword()))
                 .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid username or password")))
                 .map(UserIdentity::withoutPassword)
