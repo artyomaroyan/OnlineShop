@@ -85,3 +85,4 @@ logging:
         shop:
           user:
             security: info
+          _: debug
