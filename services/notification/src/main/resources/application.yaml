@@ -1,3 +1,22 @@
 spring:
   application:
     name: notification
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
+    name: ${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    properties:
+      show-sql: true
+
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    schemas: ${DB_SCHEMAS}
+    default-schema: ${DB_DEFAULT_SCHEMA}
+    baseline-on-migrate: true
+    callback-locations: classpath:db/migration
+    driver-class-name: org.postgresql.Driver
