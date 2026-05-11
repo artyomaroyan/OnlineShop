@@ -1,6 +1,5 @@
 package am.online.shop.user.model;
 
-import jakarta.annotation.Nullable;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,12 +27,12 @@ public final class UserIdentity implements UserDetails {
     private final boolean credentialsNonExpired;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    UserIdentity(UUID id, String username, @Nullable String password,
+    UserIdentity(UUID id, String username, String password,
                  boolean enabled, boolean accountNonExpired, boolean accountNonLocked,
                  boolean credentialsNonExpired, Collection<? extends GrantedAuthority> authorities) {
         this.id = Objects.requireNonNull(id);
         this.username = Objects.requireNonNull(username);
-        this.password = Objects.requireNonNull(password);
+        this.password = password;
         this.enabled = enabled;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;

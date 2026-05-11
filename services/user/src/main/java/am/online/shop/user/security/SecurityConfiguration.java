@@ -3,7 +3,6 @@ package am.online.shop.user.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -30,12 +29,12 @@ class SecurityConfiguration {
                                 "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-resources",
                                 "/swagger-resources/**", "/configuration/ui", "/configuration/security")
                             .permitAll()
-                        .pathMatchers("/api/v1/users/register", "/api/v1/users/get/by/**")
+                        .pathMatchers("/api/v1/users/register", "/api/v1/users/get/by/**", "/api/v1/users/login/**")
                             .permitAll()
                         .anyExchange()
                             .authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .build();
     }
 }
