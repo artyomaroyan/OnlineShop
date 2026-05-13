@@ -1,7 +1,18 @@
+# In production this must be .env file or better in AWS cloud and never should be commited and pushed in Git.
+
 DB_URL: localhost
 DB_PORT: 5432
 DB_NAME: online_shop_notification
-DB_USERNAME: online_shop_user_owner
+DB_USERNAME: online_shop_owner
 DB_PASSWORD: online_shop_user_owner
 DB_SCHEMAS: notification
 DB_DEFAULT_SCHEMA: notification
+
+MAIL_PORT: 587
+MAIL_HOST: smtp.google.com
+MAIL_USERNAME: artyomaroyan.j@gmail.com
+MAIL_PASSWORD: ibcp uaev wvri rgjj
+MAIL_PROTOCOL: SMTP
+MAIL_AUTH: true
+MAIL_ENABLE: true
+MAIL_REQUIRE: true

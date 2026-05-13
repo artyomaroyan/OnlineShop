@@ -1,9 +1,26 @@
 package am.online.shop.notification.configuration;
 
+`import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
 /**
  * Author: Artyom Aroyan
  * Date: 12.05.26
  * Time: 02:24:55
  */
-public record MailConfiguration() {
+@Validated
+@ConfigurationProperties("spring.mail")
+public record MailConfiguration(
+        @Positive int port,
+        @NotBlank String host,
+        @NotBlank String username,
+        @NotBlank String password,
+        @NotBlank String protocol,
+        @AssertFalse boolean auth,
+        @AssertFalse boolean enable,
+        @AssertFalse boolean require
+) {
 }

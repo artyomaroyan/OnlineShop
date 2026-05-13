@@ -20,3 +20,15 @@ spring:
     baseline-on-migrate: true
     callback-locations: classpath:db/migration
     driver-class-name: org.postgresql.Driver
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: ${MAIL_PROTOCOL}
+    auth: ${MAIL_AUTH}
+    enable: ${MAIL_ENABLE}
+    require: ${MAIL_REQUIRE}
+    ssl:
+      enabled: false
