@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RegistrationServiceImpl implements RegistrationService {
+class RegistrationServiceImpl implements RegistrationService {
 
     private final UserMapper userMapper;
     private final UserFactory userFactory;

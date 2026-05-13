@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+class AuthServiceImpl implements AuthService {
     private final JwtTokenService tokenService;
     private final PasswordHashService passwordHashService;
     private final CustomUserDetailsService userDetailsService;

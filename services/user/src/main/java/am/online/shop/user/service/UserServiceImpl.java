@@ -21,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
     private static final Duration USER_CACHE_TTL = Duration.ofMinutes(10L);
 
     private final UserMapper userMapper;
