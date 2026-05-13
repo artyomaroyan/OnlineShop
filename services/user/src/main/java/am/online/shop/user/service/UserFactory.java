@@ -21,7 +21,7 @@ import static am.online.shop.user.model.Role.USER;
  * Time: 16:31:57
  */
 @Component
-public record UserFactory(
+record UserFactory(
         EmailValidator emailValidator, UsernameValidator usernameValidator,
         PasswordValidator passwordValidator, PasswordHashService passwordHashService
 ) {
