@@ -9,5 +9,4 @@ class NotificationApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
