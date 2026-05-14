@@ -1,6 +1,6 @@
 package am.online.shop.notification.configuration;
 
-`import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,8 +19,8 @@ public record MailConfiguration(
         @NotBlank String username,
         @NotBlank String password,
         @NotBlank String protocol,
-        @AssertFalse boolean auth,
-        @AssertFalse boolean enable,
-        @AssertFalse boolean require
+        @AssertTrue boolean auth,
+        @AssertTrue boolean enable,
+        @AssertTrue boolean require
 ) {
 }
