@@ -1,6 +1,8 @@
 spring:
   application:
     name: notification
+  profiles:
+    active: local
 
   r2dbc:
     url: r2dbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
@@ -22,8 +24,8 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   mail:
-    host: ${MAIL_HOST}
     port: ${MAIL_PORT}
+    host: ${MAIL_HOST}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     protocol: ${MAIL_PROTOCOL}
