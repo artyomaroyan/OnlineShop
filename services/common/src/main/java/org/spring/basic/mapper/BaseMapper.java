@@ -10,23 +10,23 @@ import java.util.logging.Logger;
  * Date: 17.04.26
  * Time: 17:06:51
  */
-public abstract class BaseMapper<E, RQ, RS> implements GenericMapper<E, RQ, RS> {
+public abstract class BaseMapper<E, RS> implements GenericMapper<E, RS> {
     private static final Logger log = Logger.getLogger(BaseMapper.class.getName());
 
-    @Override
-    public Mono<E> fromRequestToEntity(RQ request) {
-        if (request == null) {
-            log.warning(String.format("Attempted to map null request to entity (%s)", getClass().getSimpleName()));
-            return Mono.error(new MapperException("Can not null request to entity"));
-        }
-        try {
-            E entity = mapToEntity(request);
-            return entity != null ? Mono.just(entity) : Mono.error(new MapperException("fromRequestToEntity returned null"));
-        } catch (MapperException ex) {
-            log.severe(String.format("Error mapping request to entity (%s), %s", getClass().getSimpleName(), ex));
-            return Mono.error(new MapperException("Failed to map Request to Entity", ex));
-        }
-    }
+//    @Override
+//    public Mono<E> fromRequestToEntity(RQ request) {
+//        if (request == null) {
+//            log.warning(String.format("Attempted to map null request to entity (%s)", getClass().getSimpleName()));
+//            return Mono.error(new MapperException("Can not null request to entity"));
+//        }
+//        try {
+//            E entity = mapToEntity(request);
+//            return entity != null ? Mono.just(entity) : Mono.error(new MapperException("fromRequestToEntity returned null"));
+//        } catch (MapperException ex) {
+//            log.severe(String.format("Error mapping request to entity (%s), %s", getClass().getSimpleName(), ex));
+//            return Mono.error(new MapperException("Failed to map Request to Entity", ex));
+//        }
+//    }
 
     @Override
     public Mono<RS> fromEntityToResponse(E entity) {
@@ -43,6 +43,6 @@ public abstract class BaseMapper<E, RQ, RS> implements GenericMapper<E, RQ, RS> 
         }
     }
 
-    protected abstract E mapToEntity(RQ request);
+//    protected abstract E mapToEntity(RQ request);
     protected abstract RS mapToResponse(E entity);
 }
