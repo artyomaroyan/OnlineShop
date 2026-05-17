@@ -11,11 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 class OtpGeneratorServiceTest {
-    @Autowired
-    private OtpGeneratorService otpGeneratorService;
 
     @Test
     void randomOtp() {
-        IO.println(otpGeneratorService.randomOtp());
+        IO.println(OtpGeneratorService.randomOtp());
     }
 }

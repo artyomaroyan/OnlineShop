@@ -16,7 +16,7 @@ import java.security.SecureRandom;
 public record OtpGeneratorService() {
     private static final int SIZE = 5;
 
-    public String randomOtp() {
+    public static String randomOtp() {
         StringBuilder generatedOtp = new StringBuilder();
         try {
             SecureRandom number = SecureRandom.getInstance("SHA1PRNG");

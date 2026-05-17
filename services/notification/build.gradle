@@ -14,7 +14,14 @@ java {
     }
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url = 'https://repo.spring.io/snapshot' }
 }
@@ -76,6 +83,10 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // lib
+//    implementation project(':common')
+    implementation 'org.spring.basic:common:1.0-SNAPSHOT'
 }
 
 tasks.named('test') {
