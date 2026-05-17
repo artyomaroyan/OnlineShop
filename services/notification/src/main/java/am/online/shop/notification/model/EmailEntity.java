@@ -21,12 +21,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "notification", schema = "notification")
+@Table(name = "email", schema = "notification")
 public class EmailEntity implements Persistable<UUID> {
     @Id
     private UUID id;
-    private String to;
-    private String from;
+    private String mailTo;
+    private String mailFrom;
     private EmailType emailType;
     private LocalDateTime sendDate;
 

@@ -1,5 +1,6 @@
 package am.online.shop.notification.service;
 
+import am.online.shop.notification.model.EmailResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -8,8 +9,8 @@ import reactor.core.publisher.Mono;
  * Time: 16:08:53
  */
 public interface MailSenderService {
-    Mono<String> sendOtpEmail();
-    Mono<String> sendWelcomeEmail();
-    Mono<String> sendInformativeEmail();
-    Mono<String> sendPasswordResetEmail();
+    Mono<EmailResponse> sendOtpEmail();
+    Mono<EmailResponse> sendWelcomeEmail();
+    Mono<EmailResponse> sendInformativeEmail();
+    Mono<EmailResponse> sendPasswordResetEmail();
 }
