@@ -1,14 +1,9 @@
 package am.online.shop.user.mapper;
 
 import am.online.shop.user.model.UserEntity;
-import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.model.UserResponse;
 import org.spring.basic.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
-
-import static am.online.shop.user.model.Role.USER;
 
 /**
  * Author: Artyom Aroyan
@@ -16,19 +11,19 @@ import static am.online.shop.user.model.Role.USER;
  * Time: 17:33:49
  */
 @Component
-public class UserMapper extends BaseMapper<UserEntity, UserRequest, UserResponse> {
+public class UserMapper extends BaseMapper<UserEntity, UserResponse> {
 
-    @Override
-    protected UserEntity mapToEntity(UserRequest request) {
-        return UserEntity.builder()
-                .id(null)
-                .username(request.username())
-                .password(request.password())
-                .email(request.email())
-                .roles(Set.of(USER))
-                .active(false)
-                .build();
-    }
+//    @Override
+//    protected UserEntity mapToEntity(UserRequest request) {
+//        return UserEntity.builder()
+//                .id(null)
+//                .username(request.username())
+//                .password(request.password())
+//                .email(request.email())
+//                .roles(Set.of(USER))
+//                .active(false)
+//                .build();
+//    }
 
     @Override
     protected UserResponse mapToResponse(UserEntity entity) {
