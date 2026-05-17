@@ -7,7 +7,6 @@ import reactor.core.publisher.Mono;
  * Date: 17.04.26
  * Time: 17:02:05
  */
-public interface GenericMapper<E, RQ, RS> {
-    Mono<E> fromRequestToEntity(RQ request);
+public interface GenericMapper<E, RS> {
     Mono<RS> fromEntityToResponse(E entity);
 }
