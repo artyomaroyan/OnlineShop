@@ -6,6 +6,7 @@ import am.online.shop.user.security.PasswordHashService;
 import am.online.shop.user.validation.EmailValidator;
 import am.online.shop.user.validation.PasswordValidator;
 import am.online.shop.user.validation.UsernameValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -21,10 +22,12 @@ import static am.online.shop.user.model.Role.USER;
  * Time: 16:31:57
  */
 @Component
-record UserFactory(
-        EmailValidator emailValidator, UsernameValidator usernameValidator,
-        PasswordValidator passwordValidator, PasswordHashService passwordHashService
-) {
+@RequiredArgsConstructor
+final class UserFactory {
+    private final EmailValidator emailValidator;
+    private final UsernameValidator usernameValidator;
+    private final PasswordValidator passwordValidator;
+    private final PasswordHashService passwordHashService;
 
     public Mono<UserEntity> createUser(UserRequest request) {
         return Mono.zip(
