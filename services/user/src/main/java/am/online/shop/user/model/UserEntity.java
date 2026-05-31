@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -34,12 +34,11 @@ public class UserEntity implements Serializable, Persistable<UUID> {
     private LocalDateTime createdAt;
     private boolean active;
 
-    @Transient
-    @Builder.Default
-    private boolean isNew = true;
+    @Version
+    private Long version;
 
     @Override
     public boolean isNew() {
-        return isNew;
+        return version == null;
     }
 }

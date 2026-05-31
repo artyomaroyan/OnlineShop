@@ -15,6 +15,11 @@ public class EmailMapper extends BaseMapper<EmailEntity, EmailResponse> {
 
     @Override
     protected EmailResponse mapToResponse(EmailEntity entity) {
-        return null;
+        return new EmailResponse(
+                entity.getId(),
+                entity.getMailTo(),
+                entity.getMailFrom(),
+                entity.getSendDate()
+        );
     }
 }

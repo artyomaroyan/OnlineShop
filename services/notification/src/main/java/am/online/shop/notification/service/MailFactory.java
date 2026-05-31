@@ -5,11 +5,16 @@ import am.online.shop.notification.model.EmailType;
 import am.online.shop.notification.security.OtpGeneratorService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,26 +25,36 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 @Slf4j
 @Component
-record MailFactory(JavaMailSender javaMailSender) {
+@RequiredArgsConstructor
+final class MailFactory {
     private static final String FROM = "online_shop@gmail.com";
 
-    public Mono<String> send(EmailType type, String... parameter) {
-        return sendMail(parameter[0], type);
+    private final JavaMailSender javaMailSender;
+
+    public Mono<EmailEntity> send(String recipient, EmailType type) {
+        return sendMail(recipient, type);
     }
 
-    private Mono<String> sendMail(String to, EmailType type) {
+    private Mono<EmailEntity> sendMail(String to, EmailType type) {
         return Mono.fromCallable(() -> {
-                    MimeMessage message = javaMailSender.createMimeMessage();
-                    MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8.name());
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8.name());
 
-                    helper.setFrom(FROM);
-                    helper.setTo(to);
-                    helper.setSubject(createSubject(type));
-                    helper.setText(createMessageBody(type));
+            helper.setFrom(FROM);
+            helper.setTo(to);
+            helper.setSubject(createSubject(type));
+            helper.setText(createMessageBody(type));
 
-                    javaMailSender.send(message);
-                    return "Email sent successfully to: " + to;
-                })
+            javaMailSender.send(message);
+            return EmailEntity.builder()
+                    .id(UUID.randomUUID())
+                    .mailTo(to)
+                    .mailFrom(FROM)
+                    .emailType(type)
+                    .sendDate(LocalDateTime.now())
+                    .build();
+        })
+                .subscribeOn(Schedulers.boundedElastic())
                 .doOnError(MessagingException.class, ex ->
                         log.error("Failed to send {} email to {}", type, to, ex))
                 .onErrorMap(MessagingException.class, ex ->
@@ -73,7 +88,7 @@ record MailFactory(JavaMailSender javaMailSender) {
     }
 
     private String createValidatedBody() {
-        return "Tank you for registration, your account was successfully activated";
+        return "Thank you for registration, your account was successfully activated";
     }
 
     private String createOtpBody() {
