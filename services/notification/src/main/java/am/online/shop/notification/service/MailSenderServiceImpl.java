@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import static am.online.shop.notification.model.EmailType.*;
+
 /**
  * Author: Artyom Aroyan
  * Date: 13.05.26
