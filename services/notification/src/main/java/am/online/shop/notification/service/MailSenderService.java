@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono;
  * Time: 16:08:53
  */
 public interface MailSenderService {
-    Mono<EmailResponse> sendOtpEmail();
-    Mono<EmailResponse> sendWelcomeEmail();
-    Mono<EmailResponse> sendInformativeEmail();
-    Mono<EmailResponse> sendPasswordResetEmail();
+    Mono<EmailResponse> sendOtpEmail(String recipient);
+    Mono<EmailResponse> sendWelcomeEmail(String recipient);
+    Mono<EmailResponse> sendInformativeEmail(String recipient);
+    Mono<EmailResponse> sendPasswordResetEmail(String recipient);
 }
