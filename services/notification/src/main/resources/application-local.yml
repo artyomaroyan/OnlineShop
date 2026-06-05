@@ -2,11 +2,11 @@
 
 DB_URL: localhost
 DB_PORT: 5432
-DB_NAME: online_shop_notification
-DB_USERNAME: online_shop_owner
-DB_PASSWORD: online_shop_user_owner
-DB_SCHEMAS: notification
-DB_DEFAULT_SCHEMA: notification
+DB_NAME: notifications
+DB_USERNAME: online_shop
+DB_PASSWORD: online_shop
+DB_SCHEMAS: notifications
+DB_DEFAULT_SCHEMA: notifications
 
 MAIL_PORT: 587
 MAIL_HOST: smtp.google.com

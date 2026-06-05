@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "email", schema = "notification")
+@Table(name = "email", schema = "notifications")
 public class EmailEntity implements Persistable<UUID> {
     @Id
     private UUID id;
