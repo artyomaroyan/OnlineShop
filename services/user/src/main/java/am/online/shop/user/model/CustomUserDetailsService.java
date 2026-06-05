@@ -27,7 +27,6 @@ public class CustomUserDetailsService implements ReactiveUserDetailsService {
                 .doOnNext(u -> log.debug("Found entity: {}", u))
                 .map(UserIdentity::from)
                 .cast(UserDetails.class)
-                .switchIfEmpty(Mono.error(() -> new UsernameNotFoundException(
-                        "No Account found with " + username + " username")));
+                .switchIfEmpty(Mono.error(() -> new UsernameNotFoundException("Bad Credentials!")));
     }
 }

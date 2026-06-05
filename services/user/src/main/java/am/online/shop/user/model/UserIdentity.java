@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Author: Artyom Aroyan
@@ -54,9 +54,15 @@ public final class UserIdentity implements UserDetails {
     }
 
     private static Collection<GrantedAuthority> mapAuthorities(Collection<Role> roles) {
-        return roles.stream()
-                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.name()))
-                .collect(Collectors.toUnmodifiableList());
+        Stream<GrantedAuthority> roleAuthorities = roles.stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.name()));
+
+        Stream<GrantedAuthority> permissionAuthorities = roles.stream()
+                .flatMap(r -> r.getPermissions().stream())
+                .map(p -> new SimpleGrantedAuthority(p.name()));
+
+        return Stream.concat(roleAuthorities, permissionAuthorities)
+                .toList();
     }
 
     public UserIdentity withoutPassword() {
