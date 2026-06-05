@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
         return new OpenAPI().info(new Info()
                         .title("Online Shop")
                         .version("1.0")
-                        .description("Online Shop App"))
+                        .description("Online Shop App (Users)"))
                 .components(new Components()
                         .addSecuritySchemes("basicAuthentication", basicAuthentication())
                         .addSecuritySchemes("bearerAuthentication", bearerAuthentication()))
