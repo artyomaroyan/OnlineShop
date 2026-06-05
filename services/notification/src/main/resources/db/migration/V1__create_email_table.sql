@@ -1,4 +1,4 @@
-create table if not exists notification.email(
+create table if not exists notifications.email(
     id uuid unique not null primary key ,
     mail_to varchar(254) not null ,
     mail_from varchar(254) not null ,

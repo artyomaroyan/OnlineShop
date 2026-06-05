@@ -34,3 +34,15 @@ spring:
     require: ${MAIL_REQUIRE}
     ssl:
       enabled: false
+
+server:
+  port: 8082
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+    operationsSorter: method
+    tagsSorter: alpha
+    display-request-duration: true
