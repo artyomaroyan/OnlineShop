@@ -1,4 +1,4 @@
-package am.online.shop.user.configuration;
+package am.online.shop.notification.configuration;
 
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
@@ -12,8 +12,8 @@ import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
 
 /**
  * Author: Artyom Aroyan
- * Date: 23.04.26
- * Time: 11:36:50
+ * Date: 04.06.26
+ * Time: 12:25:50
  */
 @Configuration
 @SecurityScheme(name = "basicAuthentication", type = HTTP, scheme = "basic")
@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
         return new OpenAPI().info(new Info()
                         .title("Online Shop")
                         .version("1.0")
-                        .description("Online Shop App (Users)"))
+                        .description("Online Shop App (Notification)"))
                 .components(new Components()
                         .addSecuritySchemes("basicAuthentication", basicAuthentication())
                         .addSecuritySchemes("bearerAuthentication", bearerAuthentication()))
