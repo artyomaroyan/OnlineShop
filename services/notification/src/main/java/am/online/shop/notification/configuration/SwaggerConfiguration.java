@@ -1,7 +1,6 @@
 package am.online.shop.notification.configuration;
 
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -17,7 +16,7 @@ import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
  */
 @Configuration
 @SecurityScheme(name = "basicAuthentication", type = HTTP, scheme = "basic")
-@SecurityScheme(name = "bearerAuthentication", type = HTTP, scheme = "bearer", bearerFormat = "JSON_WEB_TOKEN")
+@SecurityScheme(name = "bearerAuthentication", type = HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class SwaggerConfiguration {
 
     @Bean
@@ -26,23 +25,23 @@ public class SwaggerConfiguration {
                         .title("Online Shop")
                         .version("1.0")
                         .description("Online Shop App (Notification)"))
-                .components(new Components()
-                        .addSecuritySchemes("basicAuthentication", basicAuthentication())
-                        .addSecuritySchemes("bearerAuthentication", bearerAuthentication()))
+//                .components(new Components()
+//                        .addSecuritySchemes("basicAuthentication", basicAuthentication())
+//                        .addSecuritySchemes("bearerAuthentication", bearerAuthentication()))
                 .addSecurityItem(new SecurityRequirement().addList("basicAuthentication"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuthentication"));
     }
 
-    private io.swagger.v3.oas.models.security.SecurityScheme basicAuthentication() {
-        return new io.swagger.v3.oas.models.security.SecurityScheme()
-                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
-                .scheme("basic");
-    }
-
-    private io.swagger.v3.oas.models.security.SecurityScheme bearerAuthentication() {
-        return new io.swagger.v3.oas.models.security.SecurityScheme()
-                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JSON_WEB_TOKEN");
-    }
+//    private io.swagger.v3.oas.models.security.SecurityScheme basicAuthentication() {
+//        return new io.swagger.v3.oas.models.security.SecurityScheme()
+//                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+//                .scheme("basic");
+//    }
+//
+//    private io.swagger.v3.oas.models.security.SecurityScheme bearerAuthentication() {
+//        return new io.swagger.v3.oas.models.security.SecurityScheme()
+//                .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+//                .scheme("bearer")
+//                .bearerFormat("JSON_WEB_TOKEN");
+//    }
 }
