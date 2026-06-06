@@ -1,9 +1,9 @@
 package org.spring.basic.mapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spring.basic.exception.MapperException;
 import reactor.core.publisher.Mono;
-
-import java.util.logging.Logger;
 
 /**
  * Author: Artyom Aroyan
@@ -11,7 +11,8 @@ import java.util.logging.Logger;
  * Time: 17:06:51
  */
 public abstract class BaseMapper<E, RS> implements GenericMapper<E, RS> {
-    private static final Logger log = Logger.getLogger(BaseMapper.class.getName());
+//    private static final Logger log = Logger.getLogger(BaseMapper.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseMapper.class);
 
 //    @Override
 //    public Mono<E> fromRequestToEntity(RQ request) {
@@ -31,14 +32,14 @@ public abstract class BaseMapper<E, RS> implements GenericMapper<E, RS> {
     @Override
     public Mono<RS> fromEntityToResponse(E entity) {
         if (entity == null) {
-            log.warning(String.format("Attempted to map null entity to response (%s)", getClass().getSimpleName()));
+            LOGGER.warn("Attempted to map null entity to response ({})", getClass().getSimpleName());
             return Mono.error(new MapperException("Can not null entity to response"));
         }
         try {
             RS response = mapToResponse(entity);
             return response != null ? Mono.just(response) : Mono.error(new MapperException("mapToResponse returned null"));
-        } catch (MapperException ex) {
-            log.severe(String.format("Error mapping entity to response (%s), %s", getClass().getSimpleName(), ex));
+        } catch (Exception ex) {
+            LOGGER.error("Error mapping entity to response ({})", getClass().getSimpleName(), ex);
             return Mono.error(new MapperException("Failed to map Entity to Response", ex));
         }
     }
