@@ -23,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 class UserServiceImpl implements UserService {
     private static final Duration USER_CACHE_TTL = Duration.ofMinutes(10L);
+    private static final String CACHE_KEY_PREFIX = "user:cache:";
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -39,7 +40,6 @@ class UserServiceImpl implements UserService {
                     return userRepository.findById(userId)
                             .switchIfEmpty(Mono.error(new UserNotFoundException("User with Id " + userId + " not found in DB")))
                             .flatMap(userMapper::fromEntityToResponse)
-                            .switchIfEmpty(Mono.error(new RuntimeException("conversation error here !")))
                             .flatMap(user -> redisTemplate.opsForValue()
                                     .set(cacheKey, user, USER_CACHE_TTL)
                                     .thenReturn(user));
@@ -47,6 +47,6 @@ class UserServiceImpl implements UserService {
     }
 
     private String buildCacheKey(UUID userId) {
-        return String.format("user:cache:%s", userId);
+        return CACHE_KEY_PREFIX + userId;
     }
 }

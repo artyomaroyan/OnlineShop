@@ -12,4 +12,5 @@ import java.util.UUID;
  */
 public interface UserService {
     Mono<UserResponse> findUserById(UUID userId);
+    // Here will be added more methods soon
 }

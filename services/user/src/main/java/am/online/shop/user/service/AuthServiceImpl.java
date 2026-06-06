@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * Author: Artyom Aroyan
@@ -28,17 +29,37 @@ class AuthServiceImpl implements AuthService {
     public Mono<String> login(AuthRequest request) {
         return userDetailsService.findByUsername(request.username())
                 .cast(UserIdentity.class)
-                .doOnNext(u -> {
-                    log.debug("Found user: {}", u.getUsername());
-                    log.debug("Stored password hash: {}", u.getPassword());
-                    log.debug("Password matches: {}", passwordHashService.matches(request.password(), u.getPassword()));
+                .doOnNext(usr -> { // The block `doOnNext` should be removed completely since it leaks sensitive data in logs, but I keep it for seeing how it works.
+                    log.debug("Found user: {}", usr.getUsername()); // Should be removed
+                    log.debug("Stored password hash: {}", usr.getPassword()); // Should be removed
+                    log.debug("Password matches: {}", passwordHashService.matches(request.password(), usr.getPassword())); // Should be removed
                 })
-                .filter(u -> passwordHashService.matches(request.password(), u.getPassword()))
+                .flatMap(u -> Mono.fromCallable(() -> passwordHashService.matches(request.password(), u.getPassword()))
+                        .subscribeOn(Schedulers.boundedElastic())
+                        .filter(matches -> matches)
+                        .map(_ -> u))
                 .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid username or password")))
                 .map(UserIdentity::withoutPassword)
                 .map(tokenService::generateToken)
                 .doOnSuccess(_ -> log.debug("Generated JWT token for: {}", request.username()))
-                .doOnError(error -> log.error("Failed to log in: {}", error.getMessage()))
-                .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid credentials")));
+                .doOnError(error -> log.error("Failed to log in: {}", error.getMessage()));
     }
+
+//    @Override
+//    public Mono<String> login(AuthRequest request) {
+//        return userDetailsService.findByUsername(request.username())
+//                .cast(UserIdentity.class)
+//                .doOnNext(u -> {
+//                    log.debug("Found user: {}", u.getUsername());
+//                    log.debug("Stored password hash: {}", u.getPassword());
+//                    log.debug("Password matches: {}", passwordHashService.matches(request.password(), u.getPassword()));
+//                })
+//                .filter(u -> passwordHashService.matches(request.password(), u.getPassword()))
+//                .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid username or password")))
+//                .map(UserIdentity::withoutPassword)
+//                .map(tokenService::generateToken)
+//                .doOnSuccess(_ -> log.debug("Generated JWT token for: {}", request.username()))
+//                .doOnError(error -> log.error("Failed to log in: {}", error.getMessage()))
+//                .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid credentials")));
+//    }
 }

@@ -26,7 +26,7 @@ final class KeyIdGenerator {
 
             return Base64.getUrlEncoder().withoutPadding().encodeToString(hash);
         } catch (Exception ex) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Failed to generate key ID", ex);
         }
     }
 

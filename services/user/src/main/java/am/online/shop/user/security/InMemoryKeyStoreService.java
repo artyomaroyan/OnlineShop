@@ -19,7 +19,10 @@ final class InMemoryKeyStoreService implements KeyStoreService {
 
     @Override
     public SigningKeyMaterial getActiveSigningKey() {
-        return keys.get(activeKeyId);
+        if (activeKeyId == null) throw new IllegalStateException("No active signing key configured");
+        SigningKeyMaterial material = keys.get(activeKeyId);
+        if (material == null) throw new IllegalStateException("Active key ID not found in store:" + activeKeyId);
+        return material;
     }
 
     @Override
@@ -51,6 +54,9 @@ final class InMemoryKeyStoreService implements KeyStoreService {
 
     @Override
     public void removeKey(String keyId) {
+        if (keyId.equals(activeKeyId)) {
+            throw new IllegalStateException("Cannot remove the currently active key");
+        }
         keys.remove(keyId);
     }
 }

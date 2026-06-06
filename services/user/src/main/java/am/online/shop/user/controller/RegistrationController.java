@@ -6,7 +6,7 @@ import am.online.shop.user.service.RegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -23,8 +23,8 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping("/register")
-    Mono<ResponseEntity<UserResponse>> createUser(@Valid @RequestBody UserRequest request) {
-        return registrationService.create(request)
-                .map(ResponseEntity::ok);
+    @ResponseStatus(HttpStatus.CREATED)
+    Mono<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
+        return registrationService.create(request);
     }
 }

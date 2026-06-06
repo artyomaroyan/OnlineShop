@@ -1,7 +1,7 @@
 package am.online.shop.user.validation;
 
+import lombok.extern.slf4j.Slf4j;
 import org.passay.*;
-import org.spring.basic.exception.ValidationException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
  * Date: 21.04.26
  * Time: 01:31:24
  */
+@Slf4j
 @Component
-public class PasswordValidator {
-    private final org.passay.PasswordValidator validator = new org.passay.PasswordValidator(
+public class PasswordValidator implements FieldValidator<String> {
+    private static final org.passay.PasswordValidator VALIDATOR = new org.passay.PasswordValidator(
             new LengthRule(8, 32),
             new CharacterRule(EnglishCharacterData.UpperCase, 1),
             new CharacterRule(EnglishCharacterData.LowerCase, 1),
@@ -20,11 +21,30 @@ public class PasswordValidator {
             new WhitespaceRule()
     );
 
-    public boolean isValid(String password) {
-        RuleResult result = validator.validate(new PasswordData(password));
-        if (!result.isValid()) {
-            throw new ValidationException(String.join(",", validator.getMessages(result)));
+//    public boolean isValid(String password) {
+//        if (password == null || password.trim().isEmpty()) {
+//            log.warn("Password can not be null or empty");
+//            return false;
+//        }
+//        RuleResult result = VALIDATOR.validate(new PasswordData(password));
+//        if (!result.isValid()) {
+//            log.warn(String.join(",", VALIDATOR.getMessages(result)));
+//            return false;
+//        }
+//        return true;
+//    }
+
+    @Override
+    public ValidationResult validate(String password) {
+        if (password == null || password.trim().isEmpty()) {
+            log.warn("Password can not be null or empty");
+            return ValidationResult.failed("Password can not be null or empty");
         }
-        return true;
+        RuleResult result = VALIDATOR.validate(new PasswordData(password));
+        if (!result.isValid()) {
+            log.warn(String.join(",", VALIDATOR.getMessages(result)));
+            return ValidationResult.failed(VALIDATOR.getMessages(result).toString());
+        }
+        return ValidationResult.ok();
     }
 }

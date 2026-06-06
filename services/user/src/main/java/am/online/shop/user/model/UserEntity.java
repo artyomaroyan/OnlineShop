@@ -10,7 +10,7 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ public class UserEntity implements Serializable, Persistable<UUID> {
     private String password;
     private String email;
     private Set<Role> roles;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     private boolean active;
 
     @Version
