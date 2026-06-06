@@ -1,6 +1,7 @@
 package am.online.shop.user.security;
 
 import am.online.shop.user.model.UserIdentity;
+import io.jsonwebtoken.Claims;
 
 /**
  * Author: Artyom Aroyan
@@ -9,4 +10,5 @@ import am.online.shop.user.model.UserIdentity;
  */
 public interface JwtTokenService {
     String generateToken(UserIdentity identity);
+    Claims validateToken(String token);
 }

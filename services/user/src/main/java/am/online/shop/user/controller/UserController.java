@@ -24,8 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/get/by/{userId}")
-    Mono<ResponseEntity<UserResponse>> getUserById(@PathVariable UUID userId) {
-        return userService.findUserById(userId)
-                .map(ResponseEntity::ok);
+    Mono<UserResponse> getUserById(@PathVariable UUID userId) {
+        return userService.findUserById(userId);
     }
 }

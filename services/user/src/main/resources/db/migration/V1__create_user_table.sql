@@ -1,9 +1,10 @@
-create table if not exists users(
-    id uuid unique not null primary key ,
-    username varchar(16) unique not null ,
-    password varchar(500) not null ,
-    email varchar(254) not null unique ,
-    roles varchar(100) not null ,
-    created_at timestamp default now(),
-    active boolean default false
+CREATE TABLE IF NOT EXISTS users (
+    id UUID UNIQUE NOT NULL PRIMARY KEY ,
+    username VARCHAR(15) UNIQUE NOT NULL ,
+    password VARCHAR(1000) NOT NULL ,
+    email VARCHAR(254) UNIQUE NOT NULL ,
+    roles VARCHAR(100) NOT NULL ,
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    active BOOLEAN DEFAULT FALSE,
+    version BIGINT NOT NULL
 )

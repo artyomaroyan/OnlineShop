@@ -7,7 +7,6 @@ import am.online.shop.user.model.UserRequest;
 import am.online.shop.user.model.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -35,10 +34,8 @@ class RegistrationServiceImpl implements RegistrationService {
                         new RuntimeException("Save returned empty — check DB/transaction config")
                 ))
                 .flatMap(userMapper::fromEntityToResponse)
-                .onErrorResume(DuplicateKeyException.class, _ ->
-                    Mono.error(new UserAlreadyExistsException("Username or email already exists")))
-                .doOnSuccess(_ -> log.info("User created successfully: {}", request.username()))
-                .doOnError(error -> log.error("Failed to create user: {}", error.getMessage()));
+                .doOnError(error -> log.error("Failed to create user: {}", error.getMessage()))
+                .doOnSuccess(_ -> log.info("User created successfully: {}", request.username()));
     }
 
     private Mono<UserRequest> validateUniqueness(UserRequest request) {

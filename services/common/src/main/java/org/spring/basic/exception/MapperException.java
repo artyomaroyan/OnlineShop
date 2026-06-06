@@ -10,7 +10,7 @@ public class MapperException extends RuntimeException {
         super(message);
     }
 
-    public MapperException(String message, MapperException ex) {
+    public MapperException(String message, Exception ex) {
         super(message, ex);
     }
 }

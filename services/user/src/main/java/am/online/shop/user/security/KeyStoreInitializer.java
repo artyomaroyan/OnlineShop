@@ -17,7 +17,6 @@ import java.time.Instant;
  */
 @Component
 @RequiredArgsConstructor
-@EnableConfigurationProperties(JwtTokenProperties.class)
 final class KeyStoreInitializer {
     private final JwtKeyLoader keyLoader;
     private final KeyStoreService keyStore;
